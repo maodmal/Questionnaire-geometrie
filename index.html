@@ -3,121 +3,110 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Questionnaire Géométrie - En Ligne</title>
-  <!-- Intégration du style (utilise ton CSS déjà créé) -->
-  <link rel="stylesheet" href="styles.css"> <!-- optionnel si externe -->
+  <title>Formulaire Difficultés en Géométrie</title>
   <style>
     body {
       font-family: Arial, sans-serif;
-      margin: 0;
-      padding: 0;
-      background: #f0f2f5;
+      padding: 20px;
+      background: #f0f4f8;
     }
-    .container {
-      max-width: 900px;
-      margin: 40px auto;
-      background: white;
+    .hidden { display: none; }
+    .section {
+      margin-bottom: 20px;
+      background: #fff;
       padding: 20px;
       border-radius: 10px;
-      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
     }
-    .form-section { display: none; }
-    .form-section.active { display: block; }
-    .selector-buttons button {
-      padding: 15px 25px;
-      margin: 10px;
+    h2 { margin-top: 0; color: #2c3e50; }
+    label { display: block; margin: 5px 0; }
+    input[type="text"], textarea {
+      width: 100%;
+      padding: 8px;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+    }
+    button {
+      padding: 10px 20px;
+      background-color: #3498db;
       border: none;
-      border-radius: 10px;
-      cursor: pointer;
-      font-size: 16px;
-    }
-    .teacher { background: #e67e22; color: white; }
-    .student { background: #2980b9; color: white; }
-    .question { margin: 20px 0; }
-    .question label { display: block; margin: 10px 0; }
-    .submit-btn {
-      background: #2ecc71;
       color: white;
-      padding: 15px 30px;
-      border: none;
-      border-radius: 8px;
+      font-size: 16px;
+      border-radius: 5px;
       cursor: pointer;
     }
-    .progress-bar { height: 5px; background: #ddd; margin: 20px 0; }
-    .progress-fill { height: 5px; width: 0%; background: #27ae60; transition: width 0.3s; }
-    .success-message { display: none; padding: 20px; background: #2ecc71; color: white; text-align: center; }
+    button:hover {
+      background-color: #2980b9;
+    }
   </style>
 </head>
 <body>
-  <div class="container">
-    <h1>Questionnaire Géométrie</h1>
-    <div class="selector-buttons">
-      <button class="teacher" onclick="showForm('teacher')">Je suis Enseignant(e)</button>
-      <button class="student" onclick="showForm('student')">Je suis Élève</button>
-    </div>
-
-    <div class="progress-bar">
-      <div class="progress-fill" id="progressBar"></div>
-    </div>
-
-    <form class="form-section" id="teacherForm">
-      <h2>Formulaire Enseignants</h2>
-      <div class="question">
-        <label>Niveau d'enseignement :</label>
-        <input type="radio" name="niveau_enseignement" onchange="updateProgress()"> Tronc commun<br>
-        <input type="radio" name="niveau_enseignement" onchange="updateProgress()"> 1ère Bac<br>
-        <input type="radio" name="niveau_enseignement" onchange="updateProgress()"> 2ème Bac
-      </div>
-      <!-- Ajoute les autres questions ici... -->
-    </form>
-
-    <form class="form-section" id="studentForm">
-      <h2>Formulaire Élèves</h2>
-      <div class="question">
-        <label>Ton niveau d'étude :</label>
-        <input type="radio" name="niveau_eleve" onchange="updateProgress()"> Tronc commun<br>
-        <input type="radio" name="niveau_eleve" onchange="updateProgress()"> 1ère Bac<br>
-        <input type="radio" name="niveau_eleve" onchange="updateProgress()"> 2ème Bac
-      </div>
-      <!-- Ajoute les autres questions ici... -->
-    </form>
-
-    <div class="success-message" id="successMessage">
-      <h2>Merci pour votre participation !</h2>
-    </div>
-
-    <div style="text-align:center; margin-top: 20px;">
-      <button class="submit-btn" onclick="submitForm()">Envoyer</button>
-    </div>
+<h1>Questionnaire sur les Difficultés en Géométrie</h1>
+<form id="form">
+  <div class="section">
+    <label><strong>Vous êtes :</strong></label>
+    <label><input type="radio" name="role" value="enseignant" required> Enseignant</label>
+    <label><input type="radio" name="role" value="eleve"> Élève</label>
   </div>
 
-  <script>
-    function showForm(type) {
-      document.getElementById("teacherForm").classList.remove("active");
-      document.getElementById("studentForm").classList.remove("active");
-      if (type === "teacher") {
-        document.getElementById("teacherForm").classList.add("active");
+  <div id="enseignantSection" class="section hidden">
+    <h2>Enseignant</h2>
+    <!-- Ajoute ici toutes les questions enseignant avec les bons noms d'input -->
+    <label>Niveau d'enseignement :</label>
+    <label><input type="radio" name="niveau_enseignement" value="tronc_commun"> Tronc commun</label>
+    <label><input type="radio" name="niveau_enseignement" value="premiere_bac"> 1ère Bac</label>
+    <label><input type="radio" name="niveau_enseignement" value="deuxieme_bac"> 2ème Bac</label>
+    <!-- Et ainsi de suite pour toutes les autres questions enseignants -->
+  </div>
+
+  <div id="eleveSection" class="section hidden">
+    <h2>Élève</h2>
+    <!-- Ajoute ici toutes les questions élève avec les bons noms d'input -->
+    <label>Niveau :</label>
+    <label><input type="radio" name="niveau_eleve" value="tronc_commun"> Tronc commun</label>
+    <label><input type="radio" name="niveau_eleve" value="premiere_bac"> 1ère Bac</label>
+    <label><input type="radio" name="niveau_eleve" value="deuxieme_bac"> 2ème Bac</label>
+    <!-- Et ainsi de suite pour toutes les autres questions élèves -->
+  </div>
+
+  <div class="section">
+    <button type="submit">Envoyer</button>
+  </div>
+</form>
+<div id="thankYou" class="section hidden">
+  <h2>Merci pour votre participation !</h2>
+</div>
+
+<script>
+  const form = document.getElementById('form');
+  const thankYou = document.getElementById('thankYou');
+  const enseignantSection = document.getElementById('enseignantSection');
+  const eleveSection = document.getElementById('eleveSection');
+
+  document.querySelectorAll('input[name="role"]').forEach(input => {
+    input.addEventListener('change', () => {
+      if (input.value === 'enseignant') {
+        enseignantSection.classList.remove('hidden');
+        eleveSection.classList.add('hidden');
       } else {
-        document.getElementById("studentForm").classList.add("active");
+        eleveSection.classList.remove('hidden');
+        enseignantSection.classList.add('hidden');
       }
-      document.getElementById("progressBar").style.width = "0%";
-    }
+    });
+  });
 
-    function updateProgress() {
-      const activeForm = document.querySelector('.form-section.active');
-      const inputs = activeForm.querySelectorAll("input:checked, textarea");
-      const total = activeForm.querySelectorAll(".question").length;
-      let filled = inputs.length;
-      const percent = Math.min((filled / total) * 100, 100);
-      document.getElementById("progressBar").style.width = percent + "%";
-    }
-
-    function submitForm() {
-      const activeForm = document.querySelector('.form-section.active');
-      if (activeForm) activeForm.style.display = 'none';
-      document.getElementById("successMessage").style.display = 'block';
-      document.getElementById("progressBar").style.width = "100%";
-    }
-  </script>
+  form.addEventListener('submit', e => {
+    e.preventDefault();
+    fetch('TON_URL_APP_SCRIPT', {
+      method: 'POST',
+      body: new FormData(form)
+    })
+    .then(response => {
+      form.style.display = 'none';
+      thankYou.classList.remove('hidden');
+    })
+    .catch(error => alert('Erreur lors de l’envoi'));
+  });
+</script>
 </body>
 </html>
